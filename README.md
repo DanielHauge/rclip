@@ -2,6 +2,8 @@
 
 *R*emote *clip*board solution.
 
+![Rclip Screenshot](screenshot.png)
+
 ## Hosted
 
 Solution can be hosted with docker:
