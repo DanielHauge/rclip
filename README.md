@@ -1,21 +1,42 @@
 # Rclip
 
-**TODO: Add description**
+*R*emote *clip*board solution.
 
-## Installation
+## Hosted
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `rclip` to your list of dependencies in `mix.exs`:
+Solution can be hosted with docker:
 
-```elixir
-def deps do
-  [
-    {:rclip, "~> 0.1.0"}
-  ]
-end
+```bash
+docker run -d -p 80:80 danielhauge/rclip
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/rclip>.
+This will provide a hosted site at `http://localhost` where you can store and retrieve clipboard data via a web site.
 
+## API
+
+Clipboards can be posted and retrieved via simple HTTP requests.
+
+Store clipboard data:
+
+```bash
+curl -X POST http://localhost/any-clipboard-id -d "My clipboard data
+```
+
+Retrieve clipboard data:
+
+```bash
+curl http://localhost/any-clipboard-id
+```
+
+Store any file as clipboard data:
+
+```bash
+curl -X POST http://localhost/any-clipboard-id --data-binary @myfile.txt
+curl -X POST http://localhost/any-clipboard-id -F "file=@myfile.pdf"    
+```
+
+### Query parameters
+
+- `?once=true` - When retrieving clipboard data, it will be deleted after the first retrieval.
+- `?ttl=SECONDS` - When storing clipboard data, it will be deleted after the specified number of seconds.
+- `?private=true` - When storing clipboard data, it will not be showing on active clipboards list, thus retrieving it requires knowing the clipboard ID.
